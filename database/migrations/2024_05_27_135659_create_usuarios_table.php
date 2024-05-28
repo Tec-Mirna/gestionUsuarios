@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('phone');
+            $table->enum('role', ['administrador', 'usuario'])->default('usuario');
+            $table->boolean('disabled')->default(false);
             $table->timestamps();
         });
     }
