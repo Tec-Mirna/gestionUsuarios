@@ -9,3 +9,16 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/prueba', [UsuariosController::class, 'prueba']);
+
+// Obtener todos
+Route::get('/getAll', [UsuariosController::class, 'getAllUser']);
+
+// Obtener por id
+Route::get('/user/{id}', [UsuariosController::class, 'usuario']);
+
+//Crear
+Route::post('/createUser', [UsuariosController::class, 'createUser']);
+//Editar
+Route::patch('/editUser/{id}', [UsuariosController::class, 'patchUser']);
+//Eliminar/Deshabilitar
+Route::delete('/deleteUser/{id}', [UsuariosController::class, 'deleteUser']);
