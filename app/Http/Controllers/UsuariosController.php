@@ -6,6 +6,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Usuarios;
 
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\UserRequest;
+
 class UsuariosController extends Controller
 {
    public function prueba(){
@@ -39,7 +42,7 @@ class UsuariosController extends Controller
    
 
      // CREAR
-     public function createUser(Request $request){
+     public function createUser(UserRequest $request){
 
      // No puede haber un usuario duplicado
      $usuarioDatabase =  Usuarios::where('name', $request->name)->first();
@@ -84,7 +87,7 @@ class UsuariosController extends Controller
     $user->update($request->all());
     return response()->json([
         'status' => true,
-        'message' => 'Update user with id',
+        'message' => 'User updated successdully',
         'data' => $user
     ]);
    }
