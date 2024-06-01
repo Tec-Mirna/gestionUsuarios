@@ -22,3 +22,9 @@ Route::post('/createUser', [UsuariosController::class, 'createUser']);
 Route::patch('/editUser/{id}', [UsuariosController::class, 'patchUser']);
 //Eliminar/Deshabilitar
 Route::delete('/deleteUser/{id}', [UsuariosController::class, 'deleteUser']);
+
+//REGISTRAR
+Route::post('/register', [UsuariosController::class, 'register']);
+
+// LOGIN
+Route::post('/login', [UsuariosController::class, 'login']);

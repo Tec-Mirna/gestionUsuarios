@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Usuarios;
 
 use Illuminate\Support\Facades\Validator;
+
+
 use App\Http\Requests\UserRequest;
 
 class UsuariosController extends Controller
@@ -110,5 +112,73 @@ class UsuariosController extends Controller
         'message' => 'User with id ' . $id . ' deleted',
         'data' =>$user
        ], 200);
+   }
+
+   public function register(Request $request){
+
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|string',
+        'user_name' => 'required|string',
+        'email' => 'required|email', // de tipo email
+        'password' => 'required||min:8|max:16',
+        'phone' => 'required|string',
+       
+    ]);
+
+    if ($validator->fails()){
+        return response()->json([
+            'status' => false,
+            'message' => 'Validation error',
+            'data' => $validator->errors()
+        ], 409);
+    }
+    // crear el usuario
+    $user = new Usuarios();
+    $user->name = $request->name;
+    $user->user_name = $request->user_name;
+    $user->email = $request->email;
+    $user->password = bcrypt($request->password);
+    $user->phone = $request->phone;
+    $user->save();
+
+    // si se crea exitosamente
+    return response()->json([
+        'status' => true,
+        'message' => 'New user created',
+        'data' => $user
+    ], 201);
+   }
+
+   public function login(Request $request){
+
+      
+       $validator = Validator::make($request->all(), [
+             'email' => 'required|email',
+             'password' => 'required'
+       ]);
+       
+        if ($validator->fails()){
+          return response()->json([
+            'status' => false,
+            'message' => 'Validation error',
+            'data' => $validator->errors()
+          ], 409);
+        }
+
+        $credentials = $request->only(['email', 'password']);
+
+        if ( !$token = auth()->attempt($credentials) ){
+            return response()->json([
+                'status' => false,
+                'message' => 'User or password not found',
+                'data' => null,
+            ], 404);
+        }
+         // SI TODO SALE BIEN
+         return response()->json([
+            'status' => true,
+            'message' => 'Todo bien; todo correcto',
+            'data' => null,
+        ], 200);
    }
 }
