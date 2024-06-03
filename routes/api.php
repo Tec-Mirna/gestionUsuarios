@@ -10,7 +10,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::middleware('auth:sanctum')->group(function() {
+//Route::middleware('auth:sanctum')->group(function() {
 
    // Todas las rutas protegidas
   /*   Route::get('/prueba', [UsuariosController::class, 'prueba']); */
@@ -29,7 +29,7 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::patch('/editUser/{id}', [UsuariosController::class, 'patchUser']); // http://127.0.0.1:8000/api/v1/editUser/id
     //Eliminar/Deshabilitar
     Route::delete('/deleteUser/{id}', [UsuariosController::class, 'deleteUser']); // http://127.0.0.1:8000/api/v1/deleteUser/id
-});
+//});
 
 //REGISTRAR
 Route::post('/register', [UsuariosController::class, 'register']); // http://127.0.0.1:8000/api/v1/register
